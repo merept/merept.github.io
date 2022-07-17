@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>汇编/Assembler - 实习生干饭基地</title><link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#3273dc"><meta name="application-name" content="MerePT - 实习生干饭基地"><meta name="msapplication-TileImage" content="img/apple-touch-icon-next.png"><meta name="msapplication-TileColor" content="#3273dc"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="MerePT - 实习生干饭基地"><meta name="apple-mobile-web-app-status-bar-style" content="default"><link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-next.png"><link rel="apple-touch-icon" sizes="96x96" href="img/apple-touch-icon-next.png"><link rel="apple-touch-icon" sizes="128x128" href="img/apple-touch-icon-next.png"><link rel="apple-touch-icon" sizes="144x144" href="img/apple-touch-icon-next.png"><link rel="apple-touch-icon" sizes="256x256" href="img/apple-touch-icon-next.png"><link rel="apple-touch-icon" sizes="152x152" href="img/apple-touch-icon-next.png"><meta name="description" content="汇编部分学习建议 本章内容比较复杂，个人认为死记硬背并不适合，书上、PPT以及第十一章的学习通作业题里有很多很好的例子，包括邓老师在12周周一那节课讲的那几道题，都是很好的例子，可以多去看看这些例子。详细分析、了解每个例子中每一条指令的含义，CPU在这些执行这些指令时都干了些什么，有哪些寄存器发生了变化，变化是什么样的。这样学习应该会比较快速的上手汇编指令的阅读。 汇编指令这学期的单片机考试不会"><meta property="og:type" content="blog"><meta property="og:title" content="汇编/Assembler"><meta property="og:url" content="http://merept.github.io/dpj-assembler/"><meta property="og:site_name" content="实习生干饭基地"><meta property="og:description" content="汇编部分学习建议 本章内容比较复杂，个人认为死记硬背并不适合，书上、PPT以及第十一章的学习通作业题里有很多很好的例子，包括邓老师在12周周一那节课讲的那几道题，都是很好的例子，可以多去看看这些例子。详细分析、了解每个例子中每一条指令的含义，CPU在这些执行这些指令时都干了些什么，有哪些寄存器发生了变化，变化是什么样的。这样学习应该会比较快速的上手汇编指令的阅读。 汇编指令这学期的单片机考试不会"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://pic.imgdb.cn/item/6283229d0947543129f7478f.png"><meta property="og:image" content="https://pic.imgdb.cn/item/62835122094754312999e2a6.png"><meta property="article:published_time" content="2022-05-17T15:38:22.000Z"><meta property="article:modified_time" content="2022-06-25T05:31:06.217Z"><meta property="article:author" content="Peter.M.Jing"><meta property="article:tag" content="单片机"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="https://pic.imgdb.cn/item/6283229d0947543129f7478f.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://merept.github.io/dpj-assembler/"},"headline":"汇编/Assembler","image":["https://pic.imgdb.cn/item/6283229d0947543129f7478f.png","https://pic.imgdb.cn/item/62835122094754312999e2a6.png"],"datePublished":"2022-05-17T15:38:22.000Z","dateModified":"2022-06-25T05:31:06.217Z","author":{"@type":"Person","name":"Peter.M.Jing"},"publisher":{"@type":"Organization","name":"实习生干饭基地","logo":{"@type":"ImageObject","url":"http://merept.github.io/img/logo.svg"}},"description":"汇编部分学习建议 本章内容比较复杂，个人认为死记硬背并不适合，书上、PPT以及第十一章的学习通作业题里有很多很好的例子，包括邓老师在12周周一那节课讲的那几道题，都是很好的例子，可以多去看看这些例子。详细分析、了解每个例子中每一条指令的含义，CPU在这些执行这些指令时都干了些什么，有哪些寄存器发生了变化，变化是什么样的。这样学习应该会比较快速的上手汇编指令的阅读。 汇编指令这学期的单片机考试不会"}</script><link rel="canonical" href="http://merept.github.io/dpj-assembler/"><link rel="icon" href="/img/favicon.png"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/font-awesome/5.15.2/css/all.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"><link rel="stylesheet" href="https://fonts.loli.net/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><meta name="msvalidate.01" content="185432046DAE2E2833905261D9D39828"><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/cookieconsent/3.1.1/cookieconsent.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/lightgallery/1.10.0/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.8.1/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdnjs.loli.net/ajax/libs/pace/1.2.4/pace.min.js"></script><!--!--><!--!--><meta name="generator" content="Hexo 6.2.0"></head><body class="is-3-column"><nav class="navbar navbar-main is-fixed-top"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="实习生干饭基地" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/dpj">单片机</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Issues On Gituee" href="https://gitee.com/merept/merept.github.io/issues"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-05-17T15:38:22.000Z" title="2022/5/17 23:38:22">2022-05-17</time>发表</span><span class="level-item"><a class="link-muted" href="/categories/%E5%8D%95%E7%89%87%E6%9C%BA/">单片机</a></span><span class="level-item">41 分钟读完 (大约6204个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">汇编/Assembler</h1><div class="content"><blockquote>
+<p><strong>汇编部分学习建议</strong></p>
+<p>本章内容比较复杂，个人认为<strong>死记硬背并不适合</strong>，书上、PPT以及第十一章的学习通作业题里有很多很好的例子，包括邓老师在12周周一那节课讲的那几道题，都是很好的例子，可以多去看看这些例子。<strong>详细分析、了解每个例子中每一条指令的含义</strong>，CPU在这些执行这些指令时都干了些什么，有哪些寄存器发生了变化，变化是什么样的。这样学习应该会比较快速的上手汇编指令的阅读。</p>
+<p>汇编指令这学期的单片机考试<strong>不会考设计编写程序</strong>，因此只要会阅读就可以了，作业题里需要自己设计的程序可以直接把答案翻出来分析。</p>
+<p>因此本文的汇编部分除了一些基础的需要记得内容，大部分是一些例子分析。</p>
+</blockquote>
+<span id="more"></span>
+
+<hr>
+<blockquote>
+<p>在学习开始前，需要先了解一些符号注释的含义，这些符号注释是为了在描述51单片机指令系统的功能时更加简单易懂</p>
+<ol>
+<li><code>Ri</code>和<code>Rn</code>:表示当前工作寄存器区中的工作寄存器，i取0或1，表示R0或R1。n取0-7,表示R0-R7.</li>
+<li><code>#data</code>:表示包含在指令中的8位立即数。</li>
+<li><code>#data16</code>:表示包含在指令中的16位立即数。</li>
+<li><code>rel</code>:以补码形式表示的8位相对偏移量，范围为-128-127，主要用在相对寻址的指令中。</li>
+<li><code>addr16</code> 和 <code>addr11</code> :分别表示16位直接地址和11位直接地址。</li>
+<li><code>direct</code>:表示直接寻址的地址。</li>
+<li><code>bit</code>:表示可位寻址的直接位地址。</li>
+<li><code>(X)</code>:表示X单元中的内容。</li>
+<li><code>((X))</code>:表示以X单元的内容为地址的存储器单元内容，即<code>(X)</code>作地址，该地址单元的内容用<code>((X))</code>表示。</li>
+<li><code>/</code>和<code>-&gt;</code>符号:“<code>/</code>”表示对该位操作数取反，但不影响该位的原值。“<code>-&gt;</code>”表示操作流程，将箭尾一方的内容送入箭头所指另一方的单元中去。</li>
+</ol>
+</blockquote>
+<h2 id="寻址方式"><a href="#寻址方式" class="headerlink" title="寻址方式"></a>寻址方式</h2><h3 id="立即寻址"><a href="#立即寻址" class="headerlink" title="立即寻址"></a>立即寻址</h3><table>
+<thead>
+<tr>
+<th align="center">利用的变量</th>
+<th align="center">使用的空间</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>#data</code></td>
+<td align="center">ROM</td>
+</tr>
+</tbody></table>
+<p>立即寻址就是直接在数之前加<code>#</code>，表示将<code>#</code>后面的数存到对应的寄存器中</p>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MOV A,#54H</span><br></pre></td></tr></table></figure>
+
+<p>即将54H这个数存到A寄存器中。此时 (A)&#x3D;54H</p>
+<h3 id="直接寻址"><a href="#直接寻址" class="headerlink" title="直接寻址"></a>直接寻址</h3><table>
+<thead>
+<tr>
+<th align="center">利用的变量</th>
+<th align="center">使用的空间</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>direct</code>、SFR</td>
+<td align="center">片内RAM和SFR</td>
+</tr>
+</tbody></table>
+<p>直接寻址就是给出操作数的地址，直接访问这个地址<em><strong>里面的内容</strong></em>，对地址内的内容进行读取和写入。访问SFR，<strong>只能使用直接寻址</strong>，可以写SFR的名称，也可以写SFR的地址。（SFR相关内容请查阅：<a href="../dpj-mem/#%E7%89%B9%E6%AE%8A%E5%8A%9F%E8%83%BD%E5%AF%84%E5%AD%98%E5%8C%BA">特殊功能寄存区</a>）</p>
+<p>例如：片内RAM中<code>3FH</code>地址存有数据<code>FFH</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MOV A,3FH</span><br></pre></td></tr></table></figure>
+
+<p>即将<code>3FH</code>中的数据取出来放到A中：<code>(3FH)-&gt;(A)</code>。</p>
+<p>此时 (A)&#x3D;FFH</p>
+<h3 id="寄存器寻址"><a href="#寄存器寻址" class="headerlink" title="寄存器寻址"></a>寄存器寻址</h3><table>
+<thead>
+<tr>
+<th align="center">利用的变量</th>
+<th align="center">使用的空间</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>Rn</code>, <code>A</code> ,<code>B</code>, <code>Cy</code>, <code>DPTR</code></td>
+<td align="center">片内RAM</td>
+</tr>
+</tbody></table>
+<p>在指令选定的某寄存器中存放或读取操作数，以完成指令规定的操作</p>
+<p>常用R0-R7，A, B, DPTR, Cy作为寄存器寻址方式中的寄存器</p>
+<p>例如：片内RAM中<code>R7</code>中存有数据<code>A9H</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MOV A,R7</span><br></pre></td></tr></table></figure>
+
+<p>即将<code>R7</code>中的数据取出来放到A中：<code>(R7)-&gt;(A)</code>。</p>
+<p>此时 (A)&#x3D;A9H</p>
+<h3 id="寄存器间接寻址"><a href="#寄存器间接寻址" class="headerlink" title="寄存器间接寻址"></a>寄存器间接寻址</h3><p>这种方式可以类比C语言的指针，在寄存器前加上<code>@</code>就是间接寻址，就是取出指定寄存器存放的数据，通过这个数据指定的地址来找到对应地址的内容。</p>
+<blockquote>
+<p>比如某人（源寄存器）告诉你（目标寄存器），在某个房间（源寄存器中存的数据），这个房间里有一份文件（这个数据对应地址内的内容）需要你去取。这条指令就是<code>MOV 你,@某人</code>。</p>
+</blockquote>
+<p>这里举例说明：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">;(R1)=80H</span><br><span class="line">;(80H)=2FH</span><br><span class="line">MOV A,@R1</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这里的分号即为程序注释，类比C语言中的<code>\\</code>。</p>
+</blockquote>
+<p>就是将<code>R1</code>中<code>80H</code>取出，再到<code>80H</code>找到里面存放的数据，最后将这个数据存到<code>A</code>中：<code>((R1))-&gt;(A)</code></p>
+<p>此时 (A)&#x3D;2FH</p>
+<h3 id="变址寻址"><a href="#变址寻址" class="headerlink" title="变址寻址"></a>变址寻址</h3><p>变址寻址一般用于ROM的查表指令<code>MOVC</code>，在<code>@</code>后会出现两个寄存器相加，这两个寄存器分别被称为<strong>基址寄存器</strong>（DPTR和PC）和<strong>变址寄存器</strong>（A）。变址寻址时，将这两个寄存器内容相加，得到的结果为操作数的地址，将ROM中对应的该地址中的内容取出并存到目的操作数中。</p>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">;ROM中(10DCH)=1FH</span><br><span class="line">;(A)=DCH</span><br><span class="line">;(DPTR)=1000H</span><br><span class="line">MOVC A,@A+DPTR</span><br></pre></td></tr></table></figure>
+
+<p>即将(DPTR)与(A)相加，得到10DCH，访问10DCH，将10DCH的数据取出，覆盖A中的数据。</p>
+<p>操作后 (A)&#x3D;1FH</p>
+<h3 id="相对寻址"><a href="#相对寻址" class="headerlink" title="相对寻址"></a>相对寻址</h3><p>将程序计数器PC的当前值与指令所给出的偏移量<code>rel</code>相加，其和为跳转指令的转移地址；</p>
+<p>当前PC值是指存储相对转移指令的首地址加上该指令的字节数（即相对寻址是相对于下一条指令的首地址）；</p>
+<p>偏移量<code>rel</code>是有符号的单字节数。-128-+ 127(00H-FFH),负数表示从当前地址向前转移，正数表示从当前地址向后转移。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">L1:ORG 200H</span><br><span class="line">SJMP 20H</span><br><span class="line">MOV A,#20H</span><br><span class="line">L2:ORG 222H</span><br><span class="line">MOV A,#30H</span><br></pre></td></tr></table></figure>
+
+<p>该程序<code>L1</code>部分起始地址为<code>200H</code>，<code>L2</code>为<code>222H</code>，当程序执行到<code>SJMP</code>后，因为<code>SJMP</code>的字节数是2字节，所以<code>MOV A,#20H</code>的首地址是<code>202H</code>，但是因为向后跳转了<code>20H</code>，即<code>SJMP</code>后PC指向的地址是<code>222H</code>，所以直接跳转到执行<code>MOV A,#30H</code>，而<code>MOV A,#20H</code>永远不会执行。</p>
+<p>即操作后 (A)&#x3D;30H</p>
+<h3 id="位寻址"><a href="#位寻址" class="headerlink" title="位寻址"></a>位寻址</h3><table>
+<thead>
+<tr>
+<th align="center">利用的变量</th>
+<th align="center">使用的空间</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>bit</code></td>
+<td align="center">片内RAM的位寻址区以及可以位寻址的SFR</td>
+</tr>
+</tbody></table>
+<p>位寻址即可以对地址中每一位进行操作</p>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">;(24H)=1100 1011B</span><br><span class="line">MOV C,24H.0</span><br></pre></td></tr></table></figure>
+
+<p>即将<code>24H</code>的第0位的数据取出放到C中。</p>
+<p>操作后 (C)&#x3D;1</p>
+<h2 id="数据传送类指令"><a href="#数据传送类指令" class="headerlink" title="数据传送类指令"></a>数据传送类指令</h2><p><img src="https://pic.imgdb.cn/item/6283229d0947543129f7478f.png" alt="MOV指令"></p>
+<h3 id="片内RAM数据传送指令-x2F-MOV"><a href="#片内RAM数据传送指令-x2F-MOV" class="headerlink" title="片内RAM数据传送指令&#x2F;MOV"></a>片内RAM数据传送指令&#x2F;MOV</h3><p>这个指令在上面寻址方式中涉及了很多，大体就是将源操作数指定的内容送到目标操作数中，理解起来比较简单，主要需要注意的是寻址方式的不同，这里就不再多述，主要讲一讲MOVC、MOVX和特殊的数据传送指令。</p>
+<h3 id="片外RAM数据传送指令-x2F-MOVX"><a href="#片外RAM数据传送指令-x2F-MOVX" class="headerlink" title="片外RAM数据传送指令&#x2F;MOVX"></a>片外RAM数据传送指令&#x2F;MOVX</h3><p>MOVX实现了CPU对片外RAM或I&#x2F;O口进行数据传送，<strong>必须采用寄存器间接寻址的方法</strong>，通过累加器A来完成。</p>
+<p>MOVX只能采用间接寻址，有且仅有以下四条指令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MOVX A,@DPTR   ;(A)&lt;-((DPTR))</span><br><span class="line">MOVX A,@Ri      ;(A)&lt;-((Ri))</span><br><span class="line">MOVX @DPTR,A   ;(DPTR))&lt;-(A)</span><br><span class="line">MOVX @Ri,A     ;(Ri))&lt;-(A)</span><br></pre></td></tr></table></figure>
+
+<p>MOVX我个人感觉比较难理解的是，“片外”这个过程是在哪里发生的？</p>
+<p>下面根据我自己的理解直接举一个例子：</p>
+<blockquote>
+<p>片外RAM中8000H单元中有内容66H，现要将该内容送到片内的R0中。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MOV DPTR,#8000H</span><br><span class="line">MOVX A,@DPTR</span><br><span class="line">MOV R0,A</span><br></pre></td></tr></table></figure>
+
+<p>现在对这个程序每一条指令进行分析：</p>
+<ol>
+<li><p><code>MOV DPTR,#8000H</code>：将8000H存放在DPTR中（为什么是DPTR不是Ri？<code>因为8000H有16位数据，Ri存放8位，DPTR存放16位数据</code>）；</p>
+</li>
+<li><p><code>MOVX A,@DPTR</code>：将DPTR里存放的地址取出，找到<strong>片外RAM</strong>的对应地址，并将这个地址里的内容，然后传送到A中；</p>
+</li>
+<li><p><code>MOV R0,A</code>：将A里的内容传送到R0中</p>
+</li>
+<li><p>最后的每个寄存器的内容：(DPTR)&#x3D;8000H，(A)&#x3D;66H，(R0)&#x3D;66H。</p>
+</li>
+</ol>
+<p>这里可以注意到，“片外”这一过程只发生在MOVX处，即<code>MOV DPTR,#8000H</code>这里我们并不知道存到DPTR里的地址到底是片内还是片外，只有用了<code>MOVX</code>后CPU才知道要到片外RAM的对应地址去寻找内容，假如在这条指令后跟的是<code>MOV A,@DPTR</code>，那就会到片内RAM的对应地址去寻找内容（当然片内RAM是没有这么大空间的）</p>
+<blockquote>
+<p>通俗点来说，有间谍（DPTR或Ri）某天收到消息说有个东西需要你转送给某人（A），但是他要到某某游泳馆的某个储物柜里去找这个东西，但是到了游泳馆后发现，游泳馆是有男更衣室（片外RAM）和女更衣室（片内RAM）的，他并不知道是在哪个更衣室，联系了上级后告诉你要到男更衣室去找（MOVX），这才从男更衣室找到东西并转送给了A（MOVX A,@DPTR）。</p>
+</blockquote>
+<h3 id="查表指令-x2F-MOVC"><a href="#查表指令-x2F-MOVC" class="headerlink" title="查表指令&#x2F;MOVC"></a>查表指令&#x2F;MOVC</h3><p>查表指令其实就是<a href="#%E5%8F%98%E5%9D%80%E5%AF%BB%E5%9D%80">变址寻址</a>的具体应用，需要注意的是只有A、DPTR、PC可以执行。</p>
+<h3 id="堆栈操作指令-x2F-PUSH、POP"><a href="#堆栈操作指令-x2F-PUSH、POP" class="headerlink" title="堆栈操作指令&#x2F;PUSH、POP"></a>堆栈操作指令&#x2F;PUSH、POP</h3><blockquote>
+<p>堆栈这个东西大体是个啥其实上学期的算法与数据结构已经学习过了，这里需要了解的<code>PUSH</code>和<code>POP</code>执行的时候单片机内发生了些啥</p>
+</blockquote>
+<p>堆栈操作指令看似只有操作助记符以及操作数，但实际变化的还有SP寄存器。</p>
+<p>SP寄存器里面存放的数据指向了堆栈的栈顶，也就是入栈和出栈的数据都是在栈顶的地址进行执行的。</p>
+<p>PUSH指令就是<strong>先将SP加一</strong>，将栈顶移动，<strong>然后再将内容存放到SP指向的地址中</strong>。</p>
+<p>而POP指令就是<strong>先将SP指向的内容取出</strong>，再移动栈顶，即<strong>将SP减一</strong>。</p>
+<p>下面举一条例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">MOV SP,#40H</span><br><span class="line">MOV A,#20H </span><br><span class="line">MOV B,#30H</span><br><span class="line">PUSH A</span><br><span class="line">PUSH B</span><br><span class="line">POP A</span><br><span class="line">POP B</span><br></pre></td></tr></table></figure>
+
+<p>对每一条指令进行分析：</p>
+<ol>
+<li><p>前三条指令相当于进行了一个赋值，即(A)&#x3D;20H、(B)&#x3D;30H且此时栈顶指向40H；</p>
+</li>
+<li><p>将A压入栈，此时SP先+1，也就是栈顶移向41H，然后将A中的内容存入栈顶，即41H；</p>
+</li>
+<li><p>继续将B压入栈，重复上述过程，执行完此指令后，单片机寄存器内各内容如下：<code>(A)=20H (B)=30H (SP)=42H (41H)=20H (42H)=30H</code>;</p>
+</li>
+<li><p>将栈顶内容弹出并送到A中，SP减一。需要注意的是，栈顶此时指向42H，即送到A中的内容是42H的内容，也就是30H；</p>
+</li>
+<li><p>继续将栈顶内容弹出送至B，SP减一，执行完此指令后，单片机寄存器内各内容如下：<code>(A)=30H (B)=20H (SP)=40H</code>；</p>
+</li>
+<li><p>其实这些内容分析起来并不难，但是容易搞混的是弹出时先弹出的是栈顶的内容，并不是先入栈的内容，也就是算法课中提到的“后入先出”。</p>
+</li>
+</ol>
+<h3 id="交换指令-x2F-XCH"><a href="#交换指令-x2F-XCH" class="headerlink" title="交换指令&#x2F;XCH"></a>交换指令&#x2F;XCH</h3><p>交换指令有以下几条：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">XCH A,direct    ;(A)&lt;-&gt;(direct)</span><br><span class="line">XCH A,@Ri       ;(A)&lt;-&gt;((Ri))</span><br><span class="line">XCH A,Rn        ;(A)&lt;-&gt;(Rn)</span><br><span class="line">XCHD A,@Ri      ;(A3-0)&lt;-&gt;((Ri))3-0</span><br><span class="line">SWAP A          ;(A7-4)&lt;-&gt;(A3-0)</span><br></pre></td></tr></table></figure>
+
+<p>前三条就是两个操作数里的内容进行交换，第四条是将两个操作数的低四位的内容交换，最后一条是将A中高四位和低四位交换。</p>
+<h2 id="算术运算类指令"><a href="#算术运算类指令" class="headerlink" title="算术运算类指令"></a>算术运算类指令</h2><p>在这部分开始之前，我们需要先回忆一下存储器章节中学到的<a href="../dpj-mem/#PSW">PSW</a>寄存器（PPT是在第十章中）。对于这部分的内容，我们需要用到的只有<strong>第7位</strong>的Cy，<strong>第6位</strong>的AC，<strong>第2位</strong>的OV以及<strong>第0位</strong>的P。</p>
+<blockquote>
+<p>Cy - 进位标志位：<strong>第7位</strong>。在算术运算时，<strong>最高位</strong>若有进位&#x2F;借位Cy&#x3D;1;否则，Cy&#x3D;0；在位处理器中，它是位累加器</p>
+<p>AC - 半进位标志位：<strong>第6位</strong>。当<strong>低四位</strong>向<strong>高四位</strong>产生进位或借位时，AC&#x3D;1;否则，AC&#x3D;0</p>
+<p>OV - 溢出标志位：<strong>第2位</strong>。作加减法时:<strong>最高位或次高位之一有进位或者借位</strong>，OV&#x3D;1，否则为OV&#x3D;0，即最高位和次高位<strong>同时都有或没有进&#x2F;借位</strong>，OV都为0；作乘法时，积大于255 (B不为0)OV&#x3D;1；作除法时，除数为0 (B为0)，OV&#x3D; 1</p>
+<p>P - 奇偶标志位：<strong>第0位</strong>。指令执行完，<strong>累加器A</strong>中”1”的个数是奇数还是偶数；P&#x3D;1，表示A中”1“的个数为奇数；P&#x3D;0表示A中”1“的个数为偶数。<strong>这个位的值会随着A中内容改变实时变化</strong>。</p>
+</blockquote>
+<h3 id="加法指令-x2F-ADD、ADDC"><a href="#加法指令-x2F-ADD、ADDC" class="headerlink" title="加法指令&#x2F;ADD、ADDC"></a>加法指令&#x2F;ADD、ADDC</h3><p>ADD和ADDC都是将源操作数指出的内容与A相加，并将结果存在A中。<strong>不同的是</strong>，ADDC需要在加上进位，即如果Cy位为1，那么在做ADDC操作时，要再加上一，即(A)&#x3D;(源操作数)+(A)+(Cy)。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">;(A)=7AH</span><br><span class="line">;(R0)=30H</span><br><span class="line">;(30H)=E8H</span><br><span class="line">;(PSW)=81H</span><br><span class="line"></span><br><span class="line">ADD A,R0</span><br><span class="line">ADDC A,30H</span><br><span class="line">ADDC A，#01H</span><br></pre></td></tr></table></figure>
+
+<p>分析：</p>
+<ol>
+<li><p><code>ADD A,R0</code>：即7AH+30H-&gt;0111 1010B + 0011 0000B &#x3D; 1010 1010B-&gt;AAH。不难发现最高位以及D3位没有进位，即Cy、AC都为0，但是次高位向最高位有进位，则OV为1，且此时A中的“1”有4个，P为0。即该条指令执行之后(A)&#x3D;AAH，(PSW)&#x3D;04H。</p>
+</li>
+<li><p><code>ADDC A,30H</code>：这里使用的是ADDC，也就是要加上Cy位，即AAH+E8H+<strong>0</strong>-&gt;1010 1010B + 1110 1000B + <strong>0B</strong> &#x3D; 1 1001 0010B，注意这里<strong>只有低八位才是放在A中的</strong>，进位放在了Cy中，此时最高位以及D3位都有进位，所以Cy、AC都为1，而次高位也向最高位进了一位，所以OV为0，最后A中有三个“1”，P为1。即该条指令执行之后(A)&#x3D;92H，(PSW)&#x3D;C1H。</p>
+</li>
+<li><p><code>ADDC A，#01H</code>：这里也是ADDC，这条主要是为了展示Cy有进位时的计算，即92H+01H+<strong>1</strong>-&gt;1001 0010B + 0000 0001B + <strong>1B</strong> &#x3D; 1001 0100B。这里所有位都没有进位，且“1”的个数为3，即该条指令执行之后(A)&#x3D;94H，(PSW)&#x3D;01H。</p>
+</li>
+</ol>
+<h3 id="减法指令-x2F-SUBB"><a href="#减法指令-x2F-SUBB" class="headerlink" title="减法指令&#x2F;SUBB"></a>减法指令&#x2F;SUBB</h3><p>减法指令都是带借位的，即将A减去源操作数的内容以及Cy，并将结果存在A中，即(A)&#x3D;(A)-(源操作数)-(Cy)。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">;(A)=7AH</span><br><span class="line">;(PSW)=81H</span><br><span class="line"></span><br><span class="line">SUBB A,#30H</span><br></pre></td></tr></table></figure>
+
+<p>分析：因为PSW最高位Cy为1，那么算式为7AH-30H-<strong>1</strong>-&gt;0111 1010B - 0011 0000B - 1B &#x3D; 0100 1001B，没有任何的借位，且“1”的个数为3，即该条指令执行之后(A)&#x3D;49H，(PSW)&#x3D;01H。</p>
+<h3 id="乘除法指令-x2F-MUL、DIV"><a href="#乘除法指令-x2F-MUL、DIV" class="headerlink" title="乘除法指令&#x2F;MUL、DIV"></a>乘除法指令&#x2F;MUL、DIV</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MUL AB</span><br><span class="line">DIV AB</span><br></pre></td></tr></table></figure>
+
+<p>以上两条指令分别代表<code>(A) * (B)</code>和<code>(A) / (B)</code>。乘法的结果将<strong>高八位存在B中</strong>，<strong>低八位存在A中</strong>；除法的商存在A中，余数存在B中。</p>
+<p>乘除法时<strong>Cy位固定置0</strong>，而OV分为以下两种情况：</p>
+<ol>
+<li><p>乘法时，当结果大于255，即执行乘法指令<strong>后</strong>B中存的数<strong>不为0</strong>，OV为1；</p>
+</li>
+<li><p>除法时，若除数为0，即执行除法指令<strong>前</strong>B中存的数<strong>为0</strong>，根据除法的特性，除数为0后，A、B中的值为不确定值，此时OV为1。</p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">MOV A,#7AH</span><br><span class="line">MOV B,#02H</span><br><span class="line">MUL AB</span><br><span class="line"></span><br><span class="line">MOV A,#7AH</span><br><span class="line">MOV B,#02H</span><br><span class="line">DIV AB</span><br></pre></td></tr></table></figure>
+
+<p>分析：</p>
+<ol>
+<li><p><code>MUL AB</code>：7AH * 02H &#x3D; 122 * 2 &#x3D; 244 &#x3D; F4H &#x3D; 1111 0100B，小于255没有溢出，即(B)&#x3D;0，OV&#x3D;0，“1”的个数为5，即该条指令执行之后(A)&#x3D;F4H，(B)&#x3D;0，(PSW)&#x3D;01H。</p>
+</li>
+<li><p><code>DIV AB</code>：7AH &#x2F; 02H &#x3D; 122 &#x2F; 2 &#x3D; 61 &#x3D; 3DH &#x3D; 0011 1101B，除数不为0，即OV&#x3D;0，“1”的个数为5，即该条指令执行之后(A)&#x3D;3DH，(B)&#x3D;0，(PSW)&#x3D;01H。</p>
+</li>
+</ol>
+<h3 id="加一指令、减一指令-x2F-INC、DEC"><a href="#加一指令、减一指令-x2F-INC、DEC" class="headerlink" title="加一指令、减一指令&#x2F;INC、DEC"></a>加一指令、减一指令&#x2F;INC、DEC</h3><p>类比C语言的自加自减运算符，此处不再赘述。需要注意的是，如果是对A中内容操作，那么指令也会同时影响PSW中的奇偶标志位P。</p>
+<h3 id="十进制调整指令-x2F-DA"><a href="#十进制调整指令-x2F-DA" class="headerlink" title="十进制调整指令&#x2F;DA"></a>十进制调整指令&#x2F;DA</h3><p>在ADD、ADDC后的结果，因为计算机是按照二进制计算，不符合十进制运算规则，结果可能不是正确的十进制BCD码，此时需要在ADD、ADDC后加一条十进制调整指令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DA A</span><br></pre></td></tr></table></figure>
+
+<p>即可对A中内容进行调整。</p>
+<h2 id="逻辑操作类指令"><a href="#逻辑操作类指令" class="headerlink" title="逻辑操作类指令"></a>逻辑操作类指令</h2><h3 id="逻辑与、或、异或-x2F-ANL、ORL、XRL"><a href="#逻辑与、或、异或-x2F-ANL、ORL、XRL" class="headerlink" title="逻辑与、或、异或&#x2F;ANL、ORL、XRL"></a>逻辑与、或、异或&#x2F;ANL、ORL、XRL</h3><p>ANL&#x2F;ORL&#x2F;XRL分别对应<strong>按位</strong>与&#x2F;或&#x2F;异或，即将A中内容与源操作数所指内容进行逻辑<strong>按位</strong>操作。</p>
+<p>比如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MOV A,FAH</span><br><span class="line">ANL A,0FH</span><br><span class="line">ORL A,05H</span><br><span class="line">XRL A,F0H</span><br></pre></td></tr></table></figure>
+
+<p>分析：</p>
+<ol>
+<li><p><code>ANL A,0FH</code>：即1111 1010B和0000 1111B按位与，逻辑与遇0则0，即结果为0000 1010B&#x3D;0AH；</p>
+</li>
+<li><p><code>ORL A,0AH</code>：即0000 1010B和0000 0101B按位或，逻辑或遇1则1，即结果为0000 1111B&#x3D;0FH；</p>
+</li>
+<li><p><code>XRL A,F0H</code>：即0000 1111B和1111 0000B按位异或，逻辑异或遇1取反，遇0不变，即结果为1111 1111B&#x3D;FFH。</p>
+</li>
+</ol>
+<p>从上述程序不难发现，逻辑与、或、异或运算可以快速对操作数进行置数操作：</p>
+<ul>
+<li><p>需要将某几位置0，就可以逻辑与一个对应位为0、其他位为1的数；</p>
+</li>
+<li><p>需要将某几位置1，就可以逻辑或一个对应位为1、其他位为0的数；</p>
+</li>
+<li><p>需要将某几位取反，就可以逻辑异或一个对应为为1、其他位为0的数。</p>
+</li>
+</ul>
+<h3 id="循环移位指令-x2F-RL、RR、RLC、RRC"><a href="#循环移位指令-x2F-RL、RR、RLC、RRC" class="headerlink" title="循环移位指令&#x2F;RL、RR、RLC、RRC"></a>循环移位指令&#x2F;RL、RR、RLC、RRC</h3><p>即将累加器A中的数进行循环移位，L对应左移，R对应右移，C代表要和Cy位一起循环移位。</p>
+<h3 id="取反、清零指令-x2F-CPL、CLR"><a href="#取反、清零指令-x2F-CPL、CLR" class="headerlink" title="取反、清零指令&#x2F;CPL、CLR"></a>取反、清零指令&#x2F;CPL、CLR</h3><p><code>CPL A</code> - 将A中内容按位取反；</p>
+<p><code>CLR A</code> - 将A中内容清零。</p>
+<h2 id="控制转移类指令"><a href="#控制转移类指令" class="headerlink" title="控制转移类指令"></a>控制转移类指令</h2><blockquote>
+<p>控制转移类指令其实最后都是将PC计数器跳转到<code>rel</code>、<code>addr11</code>或<code>addr16</code>所指的地方。</p>
+</blockquote>
+<h3 id="无条件转移指令-x2F-LJMP、SJMP、AJMP、JMP"><a href="#无条件转移指令-x2F-LJMP、SJMP、AJMP、JMP" class="headerlink" title="无条件转移指令&#x2F;LJMP、SJMP、AJMP、JMP"></a>无条件转移指令&#x2F;LJMP、SJMP、AJMP、JMP</h3><table>
+<thead>
+<tr>
+<th align="center">指令</th>
+<th align="center">功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">LJMP</td>
+<td align="center">长转移指令，3字节，该指令包含16位地址，可以转移的范围为ROM的0000H-FFFFH</td>
+</tr>
+<tr>
+<td align="center">AJMP</td>
+<td align="center">绝对转移指令或短转移指令，2字节，包含11位地址，范围是下一条指令后的2KB区域内</td>
+</tr>
+<tr>
+<td align="center">SJMP</td>
+<td align="center">相对转移指令，2字节，采用相对寻址，转移到相对于下条指令首地址后<code>+rel</code>处</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>PC由103H变为1E00H</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ORG 100H</span><br><span class="line">LJMP 1E00H</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>PC由132H变为260H</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ORG 130H</span><br><span class="line">AJMP 260H</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>PC由202H变为20AH</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ORG 200H</span><br><span class="line">SJMP 8</span><br></pre></td></tr></table></figure>
+
+<h3 id="条件转移指令"><a href="#条件转移指令" class="headerlink" title="条件转移指令"></a>条件转移指令</h3><p>即满足条件后跳转。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">JZ rel                  ;当(A)==0时跳转</span><br><span class="line">JNZ rel                 ;当(A)!=0时跳转</span><br><span class="line">CJNE A, direct, rel     ;当(A)==direct时，执行下一条，不跳转</span><br><span class="line">                        ;当(A)&gt;direct时，跳转，且Cy=0</span><br><span class="line">                        ;当(A)&lt;direct时，跳转，且Cy=1</span><br><span class="line">CJNE A, #data, rel      ;同上</span><br><span class="line">CJNE Ra, #data, rel     ;同上</span><br><span class="line">CJNE @Ri, #data, rel    ;同上</span><br><span class="line">DJNZ Rn, rel            ;(Rn)=(Rn)-1,然后比较</span><br><span class="line">                        ;当(Rn)!=0时，跳转</span><br><span class="line">                        ;当(Rn)==0时，执行下一条，不跳转</span><br><span class="line">DJNZ direct,rel         ;同上</span><br></pre></td></tr></table></figure>
+
+<p>JZ、JNZ、CJNE可类比C语言中的if语句，满足即执行跳转，不满足即跳过。但是不管跳转执行与否，这些语句都是执行了对应的字节数和周期数。</p>
+<p>而DJNZ则可类比以下C语言代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">i--;</span><br><span class="line"><span class="keyword">if</span> (i != <span class="number">0</span>) &#123; </span><br><span class="line">    <span class="comment">//跳转后的部分 </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但一般DJNZ用来做的可以类比以下C语言代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">    i--;</span><br><span class="line">    <span class="comment">//跳转后的部分</span></span><br><span class="line">&#125; <span class="keyword">while</span> (i != <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>将片外RAM中1000H-1030H的数据块全部迁移到片内RAM的30H-60H中</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">MOV DPTR,#1000H             ;(DPTR)=1000H</span><br><span class="line">MOV R0,#30H                 ;(R0)=30H</span><br><span class="line">LOOP:   MOVX A,@DPTR        ;将片外的((DPTR))传送给A</span><br><span class="line">        INC DPTR            ;(DPTR)=(DPTR)+1</span><br><span class="line">        INC R0              ;(R0)=(R0)+1</span><br><span class="line">        CJNE R0,#61H,LOOP   ;如果(R0)!=61H，重新跳转到LOOP</span><br><span class="line">                            ;如果(R0)==61H，不跳转</span><br></pre></td></tr></table></figure>
+
+<h3 id="调用子程序及返回指令-x2F-LCALL、ACALL、RET、RETI"><a href="#调用子程序及返回指令-x2F-LCALL、ACALL、RET、RETI" class="headerlink" title="调用子程序及返回指令&#x2F;LCALL、ACALL、RET、RETI"></a>调用子程序及返回指令&#x2F;LCALL、ACALL、RET、RETI</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">LCALL addr16    ;长调用指令，3字节，调用16位子程序</span><br><span class="line">ACALL addr11    ;短调用指令，2字节，调用下一条指令2KB范围的程序</span><br><span class="line">RET</span><br><span class="line">RETI</span><br></pre></td></tr></table></figure>
+
+<p>子程序就相当于C语言中的函数，通过LCALL和ACALL来调用，每个子程序中<strong>必须要由RET返回指令</strong>，中断服务子程序则<strong>必须有RETI中断返回指令</strong>。</p>
+<p>子程序调用一般的难点在于对堆栈的调整。</p>
+<p>执行调用指令时，先将PC的内容加上对应指令的字节数，指向下一条指令地址（断点地址），并将断点地址压入堆栈（先压低八位，再压高八位），然后再将PC的内容指向子程序的地址。</p>
+<p>执行完子程序就会执行返回指令，执行返回指令时，就会将栈顶的数据弹出，先传送给PC的高八位，然后SP减一，再把新的栈顶的值传送给低八位。</p>
+<h2 id="位操作指令"><a href="#位操作指令" class="headerlink" title="位操作指令"></a>位操作指令</h2><blockquote>
+<p>位操作指令用法和对应指令普通情况下相同，只是改为对位进行操作</p>
+</blockquote>
+<p><img src="https://pic.imgdb.cn/item/62835122094754312999e2a6.png" alt="位操作指令"></p>
+<h2 id="伪指令"><a href="#伪指令" class="headerlink" title="伪指令"></a>伪指令</h2><p>计算机<strong>不做任何操作</strong>，<strong>无对应的机器码</strong>，<strong>不产生目标程序</strong>，<strong>不影响程序的执行</strong>，仅仅是<strong>能够帮助进行汇编的一些指令</strong>。它主要用来指定程序或数据的起始位置，给出些连续存放数据的地址或为中间运算结果保留一 部分存储空间以及表示源程序结束等等。</p>
+<h3 id="汇编起始指令-x2F-ORG"><a href="#汇编起始指令-x2F-ORG" class="headerlink" title="汇编起始指令&#x2F;ORG"></a>汇编起始指令&#x2F;ORG</h3><p>指定该部分程序在程序存储器中的起始地址</p>
+<p>格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[标号:] ORG 表达式</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>方框内为可选部分</p>
+</blockquote>
+<p>跟在该指令后的程序段或数据块的起始地址就是ORG后给出的地址</p>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ORG 200H</span><br><span class="line">MOV A,#100</span><br><span class="line">LOOP:   DJNZ A,LOOP</span><br></pre></td></tr></table></figure>
+
+<p>此处<code>MOV A...A,LOOP</code>这一段的起始地址就为200H，即<code>MOV A,#100</code>的首地址为200H</p>
+<h3 id="汇编结束指令-x2F-END"><a href="#汇编结束指令-x2F-END" class="headerlink" title="汇编结束指令&#x2F;END"></a>汇编结束指令&#x2F;END</h3><p>END用在程序末尾，编译器对END后的指令不会再进行汇编。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ORG 200H</span><br><span class="line">MOV A,#100</span><br><span class="line">LOOP:   DJNZ A,LOOP</span><br><span class="line">END</span><br><span class="line">SJMP LOOP</span><br></pre></td></tr></table></figure>
+
+<p>该程序中，SJMP指令没有被编译，也永远不会执行。</p>
+<h3 id="赋值指令-x2F-EQU"><a href="#赋值指令-x2F-EQU" class="headerlink" title="赋值指令&#x2F;EQU"></a>赋值指令&#x2F;EQU</h3><p>EQU指令可以类比于C语言中的<code>#define</code>宏定义：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">符号名 EQU 表达式</span><br></pre></td></tr></table></figure>
+
+<p>此后在程序中就可用定义的符号名来代表表达式的内容；</p>
+<p>该指令需先定义后使用，应放在程序开头。</p>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">E9 EQU R3</span><br><span class="line">L1 EQU 20H</span><br><span class="line">MOV E9,#30H ;(R3)=30H</span><br><span class="line">MOV A,L1    ;(A)=20H</span><br></pre></td></tr></table></figure>
+
+<h3 id="定义字节、字指令-x2F-DB、DW"><a href="#定义字节、字指令-x2F-DB、DW" class="headerlink" title="定义字节、字指令&#x2F;DB、DW"></a>定义字节、字指令&#x2F;DB、DW</h3><p>DB和DW都是表示从ROM的<strong>某一地址</strong>开始<strong>依次</strong>存储数据（每个数据要用逗号隔开），不同的是DB存放的是8位数据，而DW存放的是16位数据。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[标号:] DB 表达式</span><br><span class="line">[标号:] DW 表达式</span><br></pre></td></tr></table></figure>
+
+<p>表达式可以是常数或ASCII码</p>
+<p>e.g.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ORG 200H</span><br><span class="line">DB 0A3H,73,&#x27;A&#x27;,46H,09</span><br><span class="line"></span><br><span class="line">ORG 520H</span><br><span class="line">DW 0A66H,9BH,&#x27;B&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>DB后的结果是：(200H)&#x3D;A3H，(201H)&#x3D;49H，(202H)&#x3D;41H，(203H)&#x3D;46H，(204H)&#x3D;9H。</p>
+<p>DW后的结果是：(520H)&#x3D;0AH，(521H)&#x3D;66H，(522H)&#x3D;00H，(523H)&#x3D;9BH，(524H)&#x3D;00H，(525H)&#x3D;42H。</p>
+<p>DB比较简单，就是将每个数据依次向后存放即可；</p>
+<p>需要注意的是DW，ROM每个地址只能存放8位的数据，因此DW的数据需要分为高八位和低八位依次向后存放，比如这里的0A66H就是分为了0AH和66H分别存放在520H和521H当中。</p>
+<p>同时要注意的是，DW是存放的16位数据，就算DW后面跟的数据只有8位，也一定要补零补成16位，比如这里的9BH，虽然只写了8位，但是在存放时是存放的009AH。</p>
+<h3 id="定义位地址指令-x2F-BIT"><a href="#定义位地址指令-x2F-BIT" class="headerlink" title="定义位地址指令&#x2F;BIT"></a>定义位地址指令&#x2F;BIT</h3><p>与EQU相似，但是被定义的变成了位地址</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">F1 BIT PSW.1</span><br></pre></td></tr></table></figure>
+
+<p>汇编后，F1就是PSW.1</p>
+<h3 id="数据地址赋值指令-x2F-DATA"><a href="#数据地址赋值指令-x2F-DATA" class="headerlink" title="数据地址赋值指令&#x2F;DATA"></a>数据地址赋值指令&#x2F;DATA</h3><p>与EQU在给<strong>地址赋值</strong>时相似，区别在于DATA定义的符号登记在符号表中，可以先使用在定义。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MOV DPRT,#M6</span><br><span class="line">M6 DATA 4A00H</span><br></pre></td></tr></table></figure>
+
+<h3 id="定义存储空间指令-x2F-DS"><a href="#定义存储空间指令-x2F-DS" class="headerlink" title="定义存储空间指令&#x2F;DS"></a>定义存储空间指令&#x2F;DS</h3><p>DS可以类比于C语言的数组声明，即向ROM申请一段存储空间预留。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ORG 100H</span><br><span class="line">DS 30H</span><br><span class="line">DB 56H,8AH</span><br></pre></td></tr></table></figure>
+
+<p>即从100H开始预留48个地址单元且不赋值，所以DB指令就是从131H开始操作，即(131H)&#x3D;56H，(132H)&#x3D;8AH。</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>汇编/Assembler</p><p><a href="http://merept.github.io/dpj-assembler/">http://merept.github.io/dpj-assembler/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>Peter.M.Jing</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2022-05-17</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2022-06-25</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/">单片机</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="https://pic.imgdb.cn/item/62839a0509475431299aadc4.jpg" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="https://pic.imgdb.cn/item/62839a3709475431299b9885.jpg" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/dpj-timer/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">定时器与计数器/Timer And Counter</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/dpj-int/"><span class="level-item">中断/Interrupt</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script>var disqus_config = function () {
+            this.page.url = 'http://merept.github.io/dpj-assembler/';
+            this.page.identifier = 'dpj-assembler/';
+        };
+        (function() {
+            var d = document, s = d.createElement('script');  
+            s.src = '//' + 'merept' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="https://pic.imgdb.cn/item/6283a8250947543129e95a5e.png" alt="MerePT"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">MerePT</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>日本 我孙子市</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">7</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">1</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">2</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/merept" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/merept"><i class="fab fa-github"></i></a></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-05-28T05:50:22.000Z">2022-05-28</time></p><p class="title"><a href="/gpac/">SWPU学分绩点计算器</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-05-28T05:50:12.000Z">2022-05-28</time></p><p class="title"><a href="/gpac-how-to-bakcup/">关于如何备份历史记录</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-05-21T12:29:08.000Z">2022-05-21</time></p><p class="title"><a href="/dpj-timer/">定时器与计数器/Timer And Counter</a></p><p class="categories"><a href="/categories/%E5%8D%95%E7%89%87%E6%9C%BA/">单片机</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-05-17T15:38:22.000Z">2022-05-17</time></p><p class="title"><a href="/dpj-assembler/">汇编/Assembler</a></p><p class="categories"><a href="/categories/%E5%8D%95%E7%89%87%E6%9C%BA/">单片机</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-05-17T15:33:52.000Z">2022-05-17</time></p><p class="title"><a href="/dpj-int/">中断/Interrupt</a></p><p class="categories"><a href="/categories/%E5%8D%95%E7%89%87%E6%9C%BA/">单片机</a></p></div></article></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/"><span class="tag">单片机</span><span class="tag">5</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%BD%AF%E4%BB%B6/"><span class="tag">软件</span><span class="tag">2</span></a></div></div></div></div></div><div class="column-right-shadow is-hidden-widescreen"></div></div><div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3"><div class="card widget is-sticky" id="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="is-flex" href="#寻址方式"><span class="mr-2">1</span><span>寻址方式</span></a><ul class="menu-list"><li><a class="is-flex" href="#立即寻址"><span class="mr-2">1.1</span><span>立即寻址</span></a></li><li><a class="is-flex" href="#直接寻址"><span class="mr-2">1.2</span><span>直接寻址</span></a></li><li><a class="is-flex" href="#寄存器寻址"><span class="mr-2">1.3</span><span>寄存器寻址</span></a></li><li><a class="is-flex" href="#寄存器间接寻址"><span class="mr-2">1.4</span><span>寄存器间接寻址</span></a></li><li><a class="is-flex" href="#变址寻址"><span class="mr-2">1.5</span><span>变址寻址</span></a></li><li><a class="is-flex" href="#相对寻址"><span class="mr-2">1.6</span><span>相对寻址</span></a></li><li><a class="is-flex" href="#位寻址"><span class="mr-2">1.7</span><span>位寻址</span></a></li></ul></li><li><a class="is-flex" href="#数据传送类指令"><span class="mr-2">2</span><span>数据传送类指令</span></a><ul class="menu-list"><li><a class="is-flex" href="#片内RAM数据传送指令-x2F-MOV"><span class="mr-2">2.1</span><span>片内RAM数据传送指令/MOV</span></a></li><li><a class="is-flex" href="#片外RAM数据传送指令-x2F-MOVX"><span class="mr-2">2.2</span><span>片外RAM数据传送指令/MOVX</span></a></li><li><a class="is-flex" href="#查表指令-x2F-MOVC"><span class="mr-2">2.3</span><span>查表指令/MOVC</span></a></li><li><a class="is-flex" href="#堆栈操作指令-x2F-PUSH、POP"><span class="mr-2">2.4</span><span>堆栈操作指令/PUSH、POP</span></a></li><li><a class="is-flex" href="#交换指令-x2F-XCH"><span class="mr-2">2.5</span><span>交换指令/XCH</span></a></li></ul></li><li><a class="is-flex" href="#算术运算类指令"><span class="mr-2">3</span><span>算术运算类指令</span></a><ul class="menu-list"><li><a class="is-flex" href="#加法指令-x2F-ADD、ADDC"><span class="mr-2">3.1</span><span>加法指令/ADD、ADDC</span></a></li><li><a class="is-flex" href="#减法指令-x2F-SUBB"><span class="mr-2">3.2</span><span>减法指令/SUBB</span></a></li><li><a class="is-flex" href="#乘除法指令-x2F-MUL、DIV"><span class="mr-2">3.3</span><span>乘除法指令/MUL、DIV</span></a></li><li><a class="is-flex" href="#加一指令、减一指令-x2F-INC、DEC"><span class="mr-2">3.4</span><span>加一指令、减一指令/INC、DEC</span></a></li><li><a class="is-flex" href="#十进制调整指令-x2F-DA"><span class="mr-2">3.5</span><span>十进制调整指令/DA</span></a></li></ul></li><li><a class="is-flex" href="#逻辑操作类指令"><span class="mr-2">4</span><span>逻辑操作类指令</span></a><ul class="menu-list"><li><a class="is-flex" href="#逻辑与、或、异或-x2F-ANL、ORL、XRL"><span class="mr-2">4.1</span><span>逻辑与、或、异或/ANL、ORL、XRL</span></a></li><li><a class="is-flex" href="#循环移位指令-x2F-RL、RR、RLC、RRC"><span class="mr-2">4.2</span><span>循环移位指令/RL、RR、RLC、RRC</span></a></li><li><a class="is-flex" href="#取反、清零指令-x2F-CPL、CLR"><span class="mr-2">4.3</span><span>取反、清零指令/CPL、CLR</span></a></li></ul></li><li><a class="is-flex" href="#控制转移类指令"><span class="mr-2">5</span><span>控制转移类指令</span></a><ul class="menu-list"><li><a class="is-flex" href="#无条件转移指令-x2F-LJMP、SJMP、AJMP、JMP"><span class="mr-2">5.1</span><span>无条件转移指令/LJMP、SJMP、AJMP、JMP</span></a></li><li><a class="is-flex" href="#条件转移指令"><span class="mr-2">5.2</span><span>条件转移指令</span></a></li><li><a class="is-flex" href="#调用子程序及返回指令-x2F-LCALL、ACALL、RET、RETI"><span class="mr-2">5.3</span><span>调用子程序及返回指令/LCALL、ACALL、RET、RETI</span></a></li></ul></li><li><a class="is-flex" href="#位操作指令"><span class="mr-2">6</span><span>位操作指令</span></a></li><li><a class="is-flex" href="#伪指令"><span class="mr-2">7</span><span>伪指令</span></a><ul class="menu-list"><li><a class="is-flex" href="#汇编起始指令-x2F-ORG"><span class="mr-2">7.1</span><span>汇编起始指令/ORG</span></a></li><li><a class="is-flex" href="#汇编结束指令-x2F-END"><span class="mr-2">7.2</span><span>汇编结束指令/END</span></a></li><li><a class="is-flex" href="#赋值指令-x2F-EQU"><span class="mr-2">7.3</span><span>赋值指令/EQU</span></a></li><li><a class="is-flex" href="#定义字节、字指令-x2F-DB、DW"><span class="mr-2">7.4</span><span>定义字节、字指令/DB、DW</span></a></li><li><a class="is-flex" href="#定义位地址指令-x2F-BIT"><span class="mr-2">7.5</span><span>定义位地址指令/BIT</span></a></li><li><a class="is-flex" href="#数据地址赋值指令-x2F-DATA"><span class="mr-2">7.6</span><span>数据地址赋值指令/DATA</span></a></li><li><a class="is-flex" href="#定义存储空间指令-x2F-DS"><span class="mr-2">7.7</span><span>定义存储空间指令/DS</span></a></li></ul></li></ul></div></div><style>.menu-list > li > a.is-active + .menu-list { display: block; }.menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="实习生干饭基地" height="28"></a><p class="is-size-7"><span>&copy; 2022 Peter.M.Jing</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/merept/merept.github.io"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdnjs.loli.net/ajax/libs/jquery/3.3.1/jquery.min.js"></script><script src="https://cdnjs.loli.net/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script><script src="https://cdnjs.loli.net/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdnjs.loli.net/ajax/libs/cookieconsent/3.1.1/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdnjs.loli.net/ajax/libs/lightgallery/1.10.0/js/lightgallery.min.js" defer></script><script src="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdnjs.loli.net/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

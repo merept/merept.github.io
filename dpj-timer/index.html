@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>定时器与计数器/Timer And Counter - 实习生干饭基地</title><link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#3273dc"><meta name="application-name" content="MerePT - 实习生干饭基地"><meta name="msapplication-TileImage" content="img/apple-touch-icon-next.png"><meta name="msapplication-TileColor" content="#3273dc"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="MerePT - 实习生干饭基地"><meta name="apple-mobile-web-app-status-bar-style" content="default"><link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-next.png"><link rel="apple-touch-icon" sizes="96x96" href="img/apple-touch-icon-next.png"><link rel="apple-touch-icon" sizes="128x128" href="img/apple-touch-icon-next.png"><link rel="apple-touch-icon" sizes="144x144" href="img/apple-touch-icon-next.png"><link rel="apple-touch-icon" sizes="256x256" href="img/apple-touch-icon-next.png"><link rel="apple-touch-icon" sizes="152x152" href="img/apple-touch-icon-next.png"><meta name="description" content="文章内容有误可以直接在最下面评论 在描述问题的时候把标题加在前面，要求最好精确到问题出现位置的小标题。 比如：汇编-寻址方式-立即寻址：&amp;amp;#123;问题描述&amp;amp;#125; 错别字就没有什么必要了，我也懒得改（doge）    前言 在中断的应用举例中我们注意到里面有一个delay()函数。 123456while(1) &amp;amp;#123;   led&amp;#x3D;1;   delay(65535);   led&amp;#x3D;0"><meta property="og:type" content="blog"><meta property="og:title" content="定时器与计数器/Timer And Counter"><meta property="og:url" content="http://merept.github.io/dpj-timer/"><meta property="og:site_name" content="实习生干饭基地"><meta property="og:description" content="文章内容有误可以直接在最下面评论 在描述问题的时候把标题加在前面，要求最好精确到问题出现位置的小标题。 比如：汇编-寻址方式-立即寻址：&amp;amp;#123;问题描述&amp;amp;#125; 错别字就没有什么必要了，我也懒得改（doge）    前言 在中断的应用举例中我们注意到里面有一个delay()函数。 123456while(1) &amp;amp;#123;   led&amp;#x3D;1;   delay(65535);   led&amp;#x3D;0"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="http://merept.github.io/img/og_image.png"><meta property="article:published_time" content="2022-05-21T12:29:08.000Z"><meta property="article:modified_time" content="2022-06-25T05:31:07.755Z"><meta property="article:author" content="Peter.M.Jing"><meta property="article:tag" content="单片机"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://merept.github.io/dpj-timer/"},"headline":"定时器与计数器/Timer And Counter","image":["http://merept.github.io/img/og_image.png"],"datePublished":"2022-05-21T12:29:08.000Z","dateModified":"2022-06-25T05:31:07.755Z","author":{"@type":"Person","name":"Peter.M.Jing"},"publisher":{"@type":"Organization","name":"实习生干饭基地","logo":{"@type":"ImageObject","url":"http://merept.github.io/img/logo.svg"}},"description":"文章内容有误可以直接在最下面评论 在描述问题的时候把标题加在前面，要求最好精确到问题出现位置的小标题。 比如：汇编-寻址方式-立即寻址：&amp;#123;问题描述&amp;#125; 错别字就没有什么必要了，我也懒得改（doge）    前言 在中断的应用举例中我们注意到里面有一个delay()函数。 123456while(1) &amp;#123;   led&#x3D;1;   delay(65535);   led&#x3D;0"}</script><link rel="canonical" href="http://merept.github.io/dpj-timer/"><link rel="icon" href="/img/favicon.png"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/font-awesome/5.15.2/css/all.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"><link rel="stylesheet" href="https://fonts.loli.net/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><meta name="msvalidate.01" content="185432046DAE2E2833905261D9D39828"><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/cookieconsent/3.1.1/cookieconsent.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/lightgallery/1.10.0/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.8.1/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdnjs.loli.net/ajax/libs/pace/1.2.4/pace.min.js"></script><!--!--><!--!--><meta name="generator" content="Hexo 6.2.0"></head><body class="is-3-column"><nav class="navbar navbar-main is-fixed-top"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="实习生干饭基地" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/dpj">单片机</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Issues On Gituee" href="https://gitee.com/merept/merept.github.io/issues"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-05-21T12:29:08.000Z" title="2022/5/21 20:29:08">2022-05-21</time>发表</span><span class="level-item"><a class="link-muted" href="/categories/%E5%8D%95%E7%89%87%E6%9C%BA/">单片机</a></span><span class="level-item">18 分钟读完 (大约2670个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">定时器与计数器/Timer And Counter</h1><div class="content"><blockquote>
+<p>文章内容有误可以直接在最下面评论</p>
+<p>在描述问题的时候把标题加在前面，要求最好精确到问题出现位置的小标题。</p>
+<p>比如：<code>汇编-寻址方式-立即寻址：&#123;问题描述&#125;</code></p>
+<p>错别字就没有什么必要了，我也懒得改（doge）</p>
+</blockquote>
+<hr>
+<blockquote>
+<p><strong>前言</strong></p>
+<p>在<a href="../dpj-int/#%E5%BA%94%E7%94%A8%E4%B8%BE%E4%BE%8B">中断的应用举例中</a>我们注意到里面有一个<code>delay()</code>函数。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="number">1</span>) &#123;</span><br><span class="line">   led=<span class="number">1</span>;</span><br><span class="line">   delay(<span class="number">65535</span>);</span><br><span class="line">   led=<span class="number">0</span>;</span><br><span class="line">   delay(<span class="number">65535</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上面的代码段就是<code>delay()</code>函数的调用。因为单片机执行每条指令速度很快，如果只是单纯的对led进行更改：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="number">1</span>) &#123;</span><br><span class="line">   led=<span class="number">1</span>;</span><br><span class="line">   led=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因为速度非常快，而又因为人类的视觉残留，就会导致看上去并没有什么变化，这时就需要一个<code>delay()</code>函数使CPU空转来达到延时的效果</p>
+<p>但软件调用总归是有偏差的，能否使用硬件来执行延时呢？</p>
+</blockquote>
+<span id="more"></span>
+
+<h2 id="定时器和计数器的概念"><a href="#定时器和计数器的概念" class="headerlink" title="定时器和计数器的概念"></a>定时器和计数器的概念</h2><p>定时器和计数器的原理其实大差不差，都是对<strong>脉冲</strong>进行计数直至溢出，但有区别的是：</p>
+<ol>
+<li><p>定时器是对<strong>等间隔脉冲</strong>进行计数，这个脉冲是来自于单片机内部，所以它的频率和幅值都是稳定的；</p>
+</li>
+<li><p>计数器是对<strong>普通脉冲</strong>进行计数，这个脉冲来自于单片机外部，它的频率和幅值都是随机变化的</p>
+</li>
+</ol>
+<blockquote>
+<p>在我们本学期学习的知识中，因为定时器对等间隔脉冲进行计数的特性，定时器的运用是比较多的，主要涉及到的有以下两点：</p>
+<ol>
+<li><p>前言部分所说的延时，分别有查询法和中断法；</p>
+</li>
+<li><p>下一节串口中要涉及到的波特率发生器。</p>
+</li>
+</ol>
+<p>需要着重了解并掌握的就是<strong>定时器初值的计算</strong>，<strong>以及在C语言代码中如何赋初值</strong>。</p>
+</blockquote>
+<h2 id="相关特殊功能寄存器"><a href="#相关特殊功能寄存器" class="headerlink" title="相关特殊功能寄存器"></a>相关特殊功能寄存器</h2><p>首先是控制定时器如何工作的TMOD</p>
+<h3 id="定时器工作方式寄存器-x2F-TMOD"><a href="#定时器工作方式寄存器-x2F-TMOD" class="headerlink" title="定时器工作方式寄存器&#x2F;TMOD"></a>定时器工作方式寄存器&#x2F;TMOD</h3><p>TMOD的字节地址是<code>89H</code>，根据<a href="../dpj-mem/#%E7%89%B9%E6%AE%8A%E5%8A%9F%E8%83%BD%E5%AF%84%E5%AD%98%E5%8C%BA">存储器</a>章节中所学知识，该字节地址无法被8整除，所以TMOD<strong>不可以位寻址</strong>。</p>
+<p>TMOD中高四位和低四位分别对应控制T1和T0的工作方式，每四位从高到低分别是：</p>
+<ol>
+<li><p>GATE： 门控位，为1时有外部中断源控制，一般直接为0；</p>
+<blockquote>
+<p>但是在第七、八、九章作业客观题中出现过一道题： <code>要想测试INT0引脚上的一个正脉冲宽度,那么特殊功能寄存器TMOD的内容应为 A. 09H；B. 87H；C. 00H；D. 80H</code>。根据上面所述只要GATE位为1就可以了，且一般使用T0，也就是答案选A。</p>
+</blockquote>
+</li>
+<li><p>C&#x2F;T：功能选择位，为1时选择计数器，为0时选择定时器；</p>
+</li>
+<li><p>M1、M0：工作方式选择位，有方式0-3，可定义四种<a href="#%E5%AE%9A%E6%97%B6%E5%99%A8%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%96%B9%E5%BC%8F">工作方式</a>。</p>
+</li>
+</ol>
+<p>因为TMOD不能位寻址只能字节寻址，所以变更数据时必须一次性更改所有位的数据；</p>
+<p>例如需要T1工作在方式2，C语言代码就为</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TMOD = <span class="number">0x20</span>;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>有一个技巧就是，当使用定时器时（即门控和C&#x2F;T位都为0），选T1就是修改高位数。选T0就是修改低位数变化，且变化的数是几，就使用方式几。</p>
+</blockquote>
+<h3 id="控制寄存器-x2F-TCON"><a href="#控制寄存器-x2F-TCON" class="headerlink" title="控制寄存器&#x2F;TCON"></a>控制寄存器&#x2F;TCON</h3><p>这个我们在<a href="../dpj-int/#%E5%AE%9A%E6%97%B6%E5%99%A8%E6%8E%A7%E5%88%B6%E5%AF%84%E5%AD%98%E5%99%A8-x2F-TCON">中断</a>里已经学过低四位，而定时器就是用的高四位。</p>
+<p>TCON每两位对应一个中断源，从低到高分别是：INT0、INT1、T0、T1；</p>
+<p>而两位中，高位（IEx、TFx）都为中断标志，即在申请中断时会置1；</p>
+<p>低位（ITx、TRx）对于外部中断，就是它的触发方式；对于定时器，就是启停标志，即当该位置1，定时器就开始对脉冲进行计时。</p>
+<p>TRx的C语言代码举例：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//一系列的初始化语句（设置中断、定时器的初值）</span></span><br><span class="line">TR0 = <span class="number">0</span>;<span class="comment">//经过初始化后，定时器就可以可以开始工作了</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="中断相关"><a href="#中断相关" class="headerlink" title="中断相关"></a>中断相关</h3><p>还记得“<a href="../dpj-int/#%E4%B8%AD%E6%96%AD%E5%85%81%E8%AE%B8%E5%AF%84%E5%AD%98%E5%99%A8-x2F-IE">外内外内串</a>”吗？</p>
+<p>定时器T0、T1用到的就是这两个“内”，即ETx、PTx分别是对应了定时器的中断允许位和<a href="../dpj-int/#%E4%B8%AD%E6%96%AD%E6%BA%90">中断优先级</a>位。</p>
+<h2 id="定时器的工作方式"><a href="#定时器的工作方式" class="headerlink" title="定时器的工作方式"></a>定时器的工作方式</h2><table>
+<thead>
+<tr>
+<th align="center">M1 M0</th>
+<th align="center">方式</th>
+<th align="center">说明</th>
+<th align="center">最大计数值</th>
+<th align="center">最大定时时间（当Tcy为1us时）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">00</td>
+<td align="center">0</td>
+<td align="center">13位定时器&#x2F;计数器(THx的8位和TLx的低5位)</td>
+<td align="center">8192($2^{13}$)</td>
+<td align="center">8192us</td>
+</tr>
+<tr>
+<td align="center">01</td>
+<td align="center">1</td>
+<td align="center">Tx都为16位定时器&#x2F;计数器</td>
+<td align="center">65536($2^{16}$)</td>
+<td align="center">65536us</td>
+</tr>
+<tr>
+<td align="center">10</td>
+<td align="center">2</td>
+<td align="center">Tx为<strong>自动重赋初值</strong>的8位定时器&#x2F;计数器</td>
+<td align="center">256($2^{8}$)</td>
+<td align="center">256us</td>
+</tr>
+<tr>
+<td align="center">11</td>
+<td align="center">3</td>
+<td align="center">T0分成两个独立的8位定时器&#x2F;计数器, <strong>T1在方式3时停止工作</strong></td>
+<td align="center">256</td>
+<td align="center">256us</td>
+</tr>
+</tbody></table>
+<p>这里提到了一个THx和TLx，这两个就是对脉冲计数的寄存器，每个有8位，当使用方式0时，就是THx的8位和TLx的低5位在计数；当使用方式1时就是16位一起计数，所以方式1一共会计$2^{16}$&#x3D;<strong>65536个数</strong>；而方式2和3的THx和TLx两个相等，即$2^{8}$&#x3D;<strong>256个数</strong>。</p>
+<p>需要注意的是，四个方式里只有方式2会自动赋初值，即在定时器计数溢出后会自动回到赋的初值，而其他三个方式会直接清零，所以在溢出后需要重新赋初值。</p>
+<blockquote>
+<p>这里其实可以和数电联动一波：数电里学习的<strong>计数器</strong>有两种重置方法——清零和置数，方式二其实就相当于接了置数端，并且将初值赋给了置数的几个输入口，而其他几个接的是清零端，溢出后会直接清零。</p>
+</blockquote>
+<h2 id="定时器赋初值"><a href="#定时器赋初值" class="headerlink" title="定时器赋初值"></a>定时器赋初值</h2><p>首先要知道两个概念，计数值和Tcy：</p>
+<ol>
+<li><p>计数值就是每个方式对应的最大值减去需要设定的初值；</p>
+</li>
+<li><p>Tcy，即机器周期，也就是晶振频率的倒数乘上12，即$T_{cy}&#x3D;\frac{12}{f_{osc}}$。</p>
+</li>
+</ol>
+<p>由此我们可以得出以下公式：</p>
+<p>$$<br>计数值&#x3D;最大值-初值\<br>$$</p>
+<p>$$<br>定时时间&#x3D;计数值\times{T_{cy}}\<br>$$</p>
+<p>$$<br>T_{cy}&#x3D;{12}&#x2F;{f_{osc}}<br>$$</p>
+<p>所以在已经得出Tcy的情况下，初值可以直接这么计算</p>
+<p>$$<br>初值&#x3D;最大值-定时时间&#x2F;T_{cy}<br>$$</p>
+<p>据此，就可以算出初值了。</p>
+<p>例如选择方式1，记50ms：最大值就是65536，Tcy为1us，定时时间就是$50\times10^{3}us$，即计数值就为50000，那么初值就是最大值减初值即为15536。</p>
+<p>在赋值的时候需要注意，<strong>方式1是分为高八位和低八位的</strong>。</p>
+<h2 id="应用举例"><a href="#应用举例" class="headerlink" title="应用举例"></a>应用举例</h2><h3 id="查询法"><a href="#查询法" class="headerlink" title="查询法"></a>查询法</h3><p>这里引用的是定时器实验里的源码，我对一些细节进行了一些修改。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;reg52.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">sbit led=P1^<span class="number">4</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">char</span> temp = <span class="number">0x00</span>;</span><br><span class="line">    TMOD = <span class="number">0x01</span>;<span class="comment">//使用T0，方式1</span></span><br><span class="line">    TH0 = (<span class="number">65536</span> - <span class="number">50000</span> / <span class="number">1</span>) / <span class="number">256</span>;</span><br><span class="line">    TL0 = (<span class="number">65536</span> - <span class="number">50000</span> / <span class="number">1</span>) % <span class="number">256</span>;</span><br><span class="line">    TR0 = <span class="number">1</span>;<span class="comment">//启动T0，T0开始计时</span></span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">while</span> (TF0) &#123;</span><br><span class="line">            TH0 = (<span class="number">65536</span> - <span class="number">50000</span> / <span class="number">1</span>) / <span class="number">256</span>;<span class="comment">//重新赋初值</span></span><br><span class="line">            TL0 = (<span class="number">65536</span> - <span class="number">50000</span> / <span class="number">1</span>) % <span class="number">256</span>;</span><br><span class="line">            TF0 = <span class="number">0</span>;<span class="comment">//将中断标志手动软件置0</span></span><br><span class="line">            temp++;</span><br><span class="line">            <span class="keyword">if</span> (temp ==<span class="number">20</span>) &#123;<span class="comment">//执行20次50ms的定时后，就执行if语句</span></span><br><span class="line">               led = ~led;</span><br><span class="line">               temp = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我修改的部分里首先要指出的是，赋初值的部分我并没有像源码一样：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">TH0 = <span class="number">0x4C</span>;</span><br><span class="line">TL0 = <span class="number">0x00</span>;</span><br></pre></td></tr></table></figure>
+
+<p>他其实就是人工计算出来然后直接贴上去，但我们都在用单片机何必多次一举，所以直接将公式贴进去让单片机帮我们算就行，但是考试是不免会考到让你手算初值，所以<strong>计算初值的方法还是有必要学的</strong>。</p>
+<p>然后就是高八位和低八位的处理，他是直接赋值，所以直接把计算好的结果化成16进制在拆开赋值就行，我们这里是让单片机计算，那就可以用C语言整型变量除法和取余的特性，除以2的8次方即为取高八位，对值取2的8次方的余数就是取低8位。</p>
+<p>查询法的原理其实就是运用了当定时器溢出时，会向CPU申请中断的特性，此时对应的中断标志会置1，当<code>while</code>循环检测到中断标志为1后，就会进入<code>while</code>循环，而<code>while</code>循环里就是我们想要在定时器定时结束后执行的逻辑代码。因为没有进入中断服务子程序，中断标志没有硬件自动置0，所以还需要手动软件置0.</p>
+<blockquote>
+<p>需要注意的是，无论有没有在IE特殊功能寄存器内让定时器允许中断，当他计时溢出后中断标志依旧会硬件置1，只是CPU不会处理这个这个中断，即不会进入中断服务子程序。查询法本来就不需要进入中断服务子程序，所以也不需要对IE寄存器进行赋值。</p>
+</blockquote>
+<h3 id="中断法"><a href="#中断法" class="headerlink" title="中断法"></a>中断法</h3><p>中断法其实就是利用了中断服务子程序来执行逻辑代码，也就是相当于把查询法内<code>while (TF0) &#123;&#125;</code>里面的那段拿出来单独做成了中断服务子程序。</p>
+<p>参考代码依旧是定时器实验里的源码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;reg52.h&gt;</span></span></span><br><span class="line"></span><br><span class="line">sbit led=P1^<span class="number">4</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">unsigned</span> <span class="type">int</span> temp;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">main</span> <span class="params">(<span class="type">void</span>)</span> &#123;</span><br><span class="line">    TMOD = <span class="number">0x02</span>;<span class="comment">//使用T0，方式2</span></span><br><span class="line">    TH0 = <span class="number">0xA4</span>;<span class="comment">//赋初值，可以手算验证以下</span></span><br><span class="line">    TL0 = <span class="number">0xA4</span>;</span><br><span class="line">    TF0 = <span class="number">0</span>;  <span class="comment">//清除T0中断标志</span></span><br><span class="line">    ET0 = <span class="number">1</span>; <span class="comment">//T0允许中断</span></span><br><span class="line">    EA = <span class="number">1</span>;  <span class="comment">//中断控制总开关</span></span><br><span class="line">    TR0 = <span class="number">1</span>; <span class="comment">//T0开始定时</span></span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">timer0_int</span><span class="params">()</span> interrupt 1 &#123;<span class="comment">//中断服务子程序</span></span><br><span class="line">    <span class="comment">//方式2不需要重新赋初值</span></span><br><span class="line">    TF0=<span class="number">0</span>; <span class="comment">//清除T0中断标志，可以不用，中断子程序会硬件清0，这里只是为了保险</span></span><br><span class="line">    ET0=<span class="number">0</span>; <span class="comment">//禁止T0中断，同为为了保险起见</span></span><br><span class="line">    temp++;</span><br><span class="line">    <span class="keyword">if</span> (temp==<span class="number">10000</span>) &#123;</span><br><span class="line">        led=~led;</span><br><span class="line">        temp=<span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ET0=<span class="number">1</span>; <span class="comment">//重新允许T0中断</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</div><div class="article-licensing box"><div class="licensing-title"><p>定时器与计数器/Timer And Counter</p><p><a href="http://merept.github.io/dpj-timer/">http://merept.github.io/dpj-timer/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>Peter.M.Jing</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2022-05-21</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2022-06-25</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/">单片机</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="https://pic.imgdb.cn/item/62839a0509475431299aadc4.jpg" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="https://pic.imgdb.cn/item/62839a3709475431299b9885.jpg" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/gpac-how-to-bakcup/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">关于如何备份历史记录</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/dpj-assembler/"><span class="level-item">汇编/Assembler</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script>var disqus_config = function () {
+            this.page.url = 'http://merept.github.io/dpj-timer/';
+            this.page.identifier = 'dpj-timer/';
+        };
+        (function() {
+            var d = document, s = d.createElement('script');  
+            s.src = '//' + 'merept' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="https://pic.imgdb.cn/item/6283a8250947543129e95a5e.png" alt="MerePT"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">MerePT</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>日本 我孙子市</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">7</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">1</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">2</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/merept" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/merept"><i class="fab fa-github"></i></a></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-05-28T05:50:22.000Z">2022-05-28</time></p><p class="title"><a href="/gpac/">SWPU学分绩点计算器</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-05-28T05:50:12.000Z">2022-05-28</time></p><p class="title"><a href="/gpac-how-to-bakcup/">关于如何备份历史记录</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-05-21T12:29:08.000Z">2022-05-21</time></p><p class="title"><a href="/dpj-timer/">定时器与计数器/Timer And Counter</a></p><p class="categories"><a href="/categories/%E5%8D%95%E7%89%87%E6%9C%BA/">单片机</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-05-17T15:38:22.000Z">2022-05-17</time></p><p class="title"><a href="/dpj-assembler/">汇编/Assembler</a></p><p class="categories"><a href="/categories/%E5%8D%95%E7%89%87%E6%9C%BA/">单片机</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-05-17T15:33:52.000Z">2022-05-17</time></p><p class="title"><a href="/dpj-int/">中断/Interrupt</a></p><p class="categories"><a href="/categories/%E5%8D%95%E7%89%87%E6%9C%BA/">单片机</a></p></div></article></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/"><span class="tag">单片机</span><span class="tag">5</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%BD%AF%E4%BB%B6/"><span class="tag">软件</span><span class="tag">2</span></a></div></div></div></div></div><div class="column-right-shadow is-hidden-widescreen"></div></div><div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3"><div class="card widget is-sticky" id="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="is-flex" href="#定时器和计数器的概念"><span class="mr-2">1</span><span>定时器和计数器的概念</span></a></li><li><a class="is-flex" href="#相关特殊功能寄存器"><span class="mr-2">2</span><span>相关特殊功能寄存器</span></a><ul class="menu-list"><li><a class="is-flex" href="#定时器工作方式寄存器-x2F-TMOD"><span class="mr-2">2.1</span><span>定时器工作方式寄存器/TMOD</span></a></li><li><a class="is-flex" href="#控制寄存器-x2F-TCON"><span class="mr-2">2.2</span><span>控制寄存器/TCON</span></a></li><li><a class="is-flex" href="#中断相关"><span class="mr-2">2.3</span><span>中断相关</span></a></li></ul></li><li><a class="is-flex" href="#定时器的工作方式"><span class="mr-2">3</span><span>定时器的工作方式</span></a></li><li><a class="is-flex" href="#定时器赋初值"><span class="mr-2">4</span><span>定时器赋初值</span></a></li><li><a class="is-flex" href="#应用举例"><span class="mr-2">5</span><span>应用举例</span></a><ul class="menu-list"><li><a class="is-flex" href="#查询法"><span class="mr-2">5.1</span><span>查询法</span></a></li><li><a class="is-flex" href="#中断法"><span class="mr-2">5.2</span><span>中断法</span></a></li></ul></li></ul></div></div><style>.menu-list > li > a.is-active + .menu-list { display: block; }.menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="实习生干饭基地" height="28"></a><p class="is-size-7"><span>&copy; 2022 Peter.M.Jing</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/merept/merept.github.io"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdnjs.loli.net/ajax/libs/jquery/3.3.1/jquery.min.js"></script><script src="https://cdnjs.loli.net/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script><script src="https://cdnjs.loli.net/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdnjs.loli.net/ajax/libs/cookieconsent/3.1.1/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdnjs.loli.net/ajax/libs/lightgallery/1.10.0/js/lightgallery.min.js" defer></script><script src="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdnjs.loli.net/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>

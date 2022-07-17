@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>存储器/Memorey - 实习生干饭基地</title><link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#3273dc"><meta name="application-name" content="MerePT - 实习生干饭基地"><meta name="msapplication-TileImage" content="img/apple-touch-icon-next.png"><meta name="msapplication-TileColor" content="#3273dc"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="MerePT - 实习生干饭基地"><meta name="apple-mobile-web-app-status-bar-style" content="default"><link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-next.png"><link rel="apple-touch-icon" sizes="96x96" href="img/apple-touch-icon-next.png"><link rel="apple-touch-icon" sizes="128x128" href="img/apple-touch-icon-next.png"><link rel="apple-touch-icon" sizes="144x144" href="img/apple-touch-icon-next.png"><link rel="apple-touch-icon" sizes="256x256" href="img/apple-touch-icon-next.png"><link rel="apple-touch-icon" sizes="152x152" href="img/apple-touch-icon-next.png"><meta name="description" content="单片机的存储器分为程序存储器ROM及数据存储器RAM，ROM为统一编址，RAM为独立编址。ROM和RAM又各自分为片内与片外 总线&amp;#x2F;Bus 地址总线 AB P0、P2口，各8根共16根  数据总线 DB P0口共8根"><meta property="og:type" content="blog"><meta property="og:title" content="存储器/Memorey"><meta property="og:url" content="http://merept.github.io/dpj-mem/"><meta property="og:site_name" content="实习生干饭基地"><meta property="og:description" content="单片机的存储器分为程序存储器ROM及数据存储器RAM，ROM为统一编址，RAM为独立编址。ROM和RAM又各自分为片内与片外 总线&amp;#x2F;Bus 地址总线 AB P0、P2口，各8根共16根  数据总线 DB P0口共8根"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://pic.imgdb.cn/item/627f919c0947543129f577dc.png"><meta property="og:image" content="https://pic.imgdb.cn/item/627f91c90947543129f60a97.png"><meta property="og:image" content="https://pic.imgdb.cn/item/627f91e50947543129f669b3.png"><meta property="article:published_time" content="2022-05-17T15:32:39.000Z"><meta property="article:modified_time" content="2022-05-20T04:58:31.059Z"><meta property="article:author" content="Peter.M.Jing"><meta property="article:tag" content="单片机"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="https://pic.imgdb.cn/item/627f919c0947543129f577dc.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"http://merept.github.io/dpj-mem/"},"headline":"存储器/Memorey","image":["https://pic.imgdb.cn/item/627f919c0947543129f577dc.png","https://pic.imgdb.cn/item/627f91c90947543129f60a97.png","https://pic.imgdb.cn/item/627f91e50947543129f669b3.png"],"datePublished":"2022-05-17T15:32:39.000Z","dateModified":"2022-05-20T04:58:31.059Z","author":{"@type":"Person","name":"Peter.M.Jing"},"publisher":{"@type":"Organization","name":"实习生干饭基地","logo":{"@type":"ImageObject","url":"http://merept.github.io/img/logo.svg"}},"description":"单片机的存储器分为程序存储器ROM及数据存储器RAM，ROM为统一编址，RAM为独立编址。ROM和RAM又各自分为片内与片外 总线&#x2F;Bus 地址总线 AB P0、P2口，各8根共16根  数据总线 DB P0口共8根"}</script><link rel="canonical" href="http://merept.github.io/dpj-mem/"><link rel="icon" href="/img/favicon.png"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/font-awesome/5.15.2/css/all.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/highlight.js/9.12.0/styles/atom-one-light.min.css"><link rel="stylesheet" href="https://fonts.loli.net/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><meta name="msvalidate.01" content="185432046DAE2E2833905261D9D39828"><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/cookieconsent/3.1.1/cookieconsent.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/lightgallery/1.10.0/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.8.1/css/justifiedGallery.min.css"><!--!--><!--!--><!--!--><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdnjs.loli.net/ajax/libs/pace/1.2.4/pace.min.js"></script><!--!--><!--!--><meta name="generator" content="Hexo 6.2.0"></head><body class="is-3-column"><nav class="navbar navbar-main is-fixed-top"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/logo.svg" alt="实习生干饭基地" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">主页</a><a class="navbar-item" href="/dpj">单片机</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Issues On Gituee" href="https://gitee.com/merept/merept.github.io/issues"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-6-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2022-05-17T15:32:39.000Z" title="2022/5/17 23:32:39">2022-05-17</time>发表</span><span class="level-item"><a class="link-muted" href="/categories/%E5%8D%95%E7%89%87%E6%9C%BA/">单片机</a></span><span class="level-item">12 分钟读完 (大约1862个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">存储器/Memorey</h1><div class="content"><p>单片机的存储器分为<strong>程序存储器ROM</strong>及<strong>数据存储器RAM</strong>，ROM为<strong>统一编址</strong>，RAM为<strong>独立编址</strong>。ROM和RAM又各自分为片内与片外</p>
+<h2 id="总线-x2F-Bus"><a href="#总线-x2F-Bus" class="headerlink" title="总线&#x2F;Bus"></a>总线&#x2F;Bus</h2><ol>
+<li><p>地址总线 <code>AB</code> P0、P2口，各8根共16根</p>
+</li>
+<li><p>数据总线 <code>DB</code> P0口共8根</p>
+</li>
+</ol>
+<span id="more"></span>
+
+<ol start="3">
+<li>控制总线 <code>CB</code> ALE、EA、PSEN、WR、RD</li>
+</ol>
+<h2 id="ROM结构"><a href="#ROM结构" class="headerlink" title="ROM结构"></a>ROM结构</h2><blockquote>
+<p>统一编址</p>
+<p>地址空间：64KB</p>
+<p>片内4KB</p>
+<p>片外可扩展64KB</p>
+<p>片外的<code>0000H~0FFFH</code>与片内的4KB共用同一地址范围，通过<em>EA</em>引脚控制选择片内还是片外。<em>EA</em>为低电平时选择片外的<code>0000H~0FFFH</code>；为高电平时选择片内。</p>
+</blockquote>
+<p><img src="https://pic.imgdb.cn/item/627f919c0947543129f577dc.png" alt="ROM结构"></p>
+<h3 id="各操作的入口地址"><a href="#各操作的入口地址" class="headerlink" title="各操作的入口地址"></a>各操作的入口地址</h3><table>
+<thead>
+<tr>
+<th align="center">操作</th>
+<th align="center">入口地址</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">复位</td>
+<td align="center">0000H</td>
+</tr>
+<tr>
+<td align="center">外部中断0（INT0）</td>
+<td align="center">0003H</td>
+</tr>
+<tr>
+<td align="center">定时器&#x2F;计数器0（T0）溢出</td>
+<td align="center">000BH</td>
+</tr>
+<tr>
+<td align="center">外部中断1（INT1）</td>
+<td align="center">0013H</td>
+</tr>
+<tr>
+<td align="center">定时器&#x2F;计数器1（T1）溢出</td>
+<td align="center">001BH</td>
+</tr>
+<tr>
+<td align="center">串行口中断</td>
+<td align="center">0023H</td>
+</tr>
+<tr>
+<td align="center">T2溢出或T2EX端负跳变（52子系列）</td>
+<td align="center">002BH</td>
+</tr>
+</tbody></table>
+<h2 id="RAM结构"><a href="#RAM结构" class="headerlink" title="RAM结构"></a>RAM结构</h2><blockquote>
+<p>独立编址</p>
+<p>两个地址空间</p>
+<p>片内256B <code>00H~FFH</code></p>
+<p>片外64KB <code>0000H~FFFFH</code></p>
+</blockquote>
+<h3 id="工作寄存器组"><a href="#工作寄存器组" class="headerlink" title="工作寄存器组"></a>工作寄存器组</h3><blockquote>
+<p>片内RAM地址 <code>00H~1FH</code></p>
+</blockquote>
+<p>每组工作寄存器组都有8个工作寄存器(R0-R7)组成;</p>
+<p>每个工作寄存器对应一个固定的地址;</p>
+<p>在单片机正常工作时，只有一组工作寄存器处于前台工作，其他的在后台等待;</p>
+<p>工作寄存器组的选择由单片机中一个特殊功能寄存器来控制。</p>
+<p><img src="https://pic.imgdb.cn/item/627f91c90947543129f60a97.png" alt="工作寄存器组"></p>
+<h3 id="位寻址区"><a href="#位寻址区" class="headerlink" title="位寻址区"></a>位寻址区</h3><blockquote>
+<p>片内RAM地址 <code>20H~2FH</code></p>
+</blockquote>
+<p>可通过执行指令直接对某-位进行操作；</p>
+<p>字节地址中的每一位都对应一个位地址,在使用时可以直接对位地址进行访问。</p>
+<blockquote>
+<p>字节地址与位地址的关系见新版书 P62 表5.2</p>
+</blockquote>
+<h3 id="普通RAM区"><a href="#普通RAM区" class="headerlink" title="普通RAM区"></a>普通RAM区</h3><blockquote>
+<p>片内RAM地址 <code>30H~7FH</code></p>
+</blockquote>
+<p>该区域内的字节地址都不可以进行位寻址；</p>
+<p>作为堆栈区使用，要留出足够的空间，否则就会因为数据存储而破坏堆栈内容。</p>
+<h3 id="特殊功能寄存区"><a href="#特殊功能寄存区" class="headerlink" title="特殊功能寄存区"></a>特殊功能寄存区</h3><blockquote>
+<p>片内RAM地址 <code>80H~FFH</code></p>
+</blockquote>
+<p>SFR:管理和控制单片机的工作。可通过对SFR进行编程操作，即可管理与单片机有关的所有功能部件，并且可方便地完成各种操作和运算。</p>
+<p>在SFR中，凡是<em><strong>能被8整除的都可被位寻址</strong></em>，如TCON(<code>88H</code>)、SCON(<code>98H</code>)、IE(<code>A8H</code>)、IP(<code>B8H</code>)。</p>
+<blockquote>
+<p>特殊功能寄存器的地址表见新版书 P64 表5.3</p>
+</blockquote>
+<h4 id="PSW"><a href="#PSW" class="headerlink" title="PSW"></a>PSW</h4><p>Cy - 进位标志位：在算术运算时，最高位若有进位&#x2F;借位Cy&#x3D;1;否则，Cy&#x3D;0；在位处理器中，它是位累加器</p>
+<p>AC - 半进位标志位：在BCD码运算时，用作十进位调整即当D3位向D4位产生进位或借位时，Ac&#x3D;1;否则，Ac&#x3D;0</p>
+<p>RS0、RS1 - 工作寄存器选择：选择片内RAM区中的4组工作寄存器区中的某一组为当前工作寄存区</p>
+<p>OV - 溢出标志位：作加减法时:最高位或次高位之- -有进位或者借位，OV&#x3D;1，否则为OV&#x3D;0；作乘法时，积大于255 (B不为0)OV&#x3D;1；作除法时，除数为0 (B为0)，OV&#x3D; 1</p>
+<p>P - 奇偶标志位：指令执行完，累加器A中”1”的个数是奇数还是偶数；P&#x3D;1，表示A中”1“的个数为奇数；P&#x3D;0表示A中”1“的个数为偶数。</p>
+<h4 id="A、B"><a href="#A、B" class="headerlink" title="A、B"></a>A、B</h4><table>
+<thead>
+<tr>
+<th align="center">A</th>
+<th align="center">B</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">累加器</td>
+<td align="center">寄存器</td>
+</tr>
+<tr>
+<td align="center">使用最频繁</td>
+<td align="center">乘除指令需要，其他时候为普通寄存器</td>
+</tr>
+</tbody></table>
+<h4 id="DPTR"><a href="#DPTR" class="headerlink" title="DPTR"></a>DPTR</h4><p>DPTR0&#x2F;DPTR1 - 数据指针寄存器</p>
+<p>可作为一个16位寄存器来用，也可作为两个独立的8位寄存器DPH0 (或DPH1) 和DPL0 (或DPL1)来用；</p>
+<p>DPS: 0 -&gt; 选择DPTR0; 1 -&gt; 选择DPTR1。</p>
+<h2 id="程序存储器扩展"><a href="#程序存储器扩展" class="headerlink" title="程序存储器扩展"></a>程序存储器扩展</h2><p>当程序容量过大，单片机无法写入时，可选片外扩展存储器</p>
+<p>当扩展了多片存储器时，需要进行存储器的选择，一般情况下有以下几种选择的方式</p>
+<blockquote>
+<p>线选法 - 直接利用末用的某一高位地址线作为存储器芯片的”片选” 控制信号。</p>
+<p>部分译码 - 存储器芯片的地址线与单片机系统的地址线顺次相接后，剩余的高位地址线仅用一部分参加译码。</p>
+<p>全译码 - 存储器芯片的地址线与单片机系统的地址线顺次相接后，剩余的高位地址线全部参加译码。</p>
+</blockquote>
+<p>关于外部扩展存储器的地址范围，这部分内容<del>只可意会不可言传</del>我不太会写，下面举一个全译码的例子来辅助理解。</p>
+<h3 id="程序存储器扩展地址范围计算"><a href="#程序存储器扩展地址范围计算" class="headerlink" title="程序存储器扩展地址范围计算"></a>程序存储器扩展地址范围计算</h3><p><img src="https://pic.imgdb.cn/item/627f91e50947543129f669b3.png" alt="存储器扩展"></p>
+<p>如图，P2.7-P2.5为片选信号，P2.4-P2.0为地址线，地址线接入了一个74LS138译码器，译码器的其中两个（Y0、Y1）输出分别接入两片存储器的<em>CE</em>口；</p>
+<p><em>CE口</em>为低电平有效，即当38译码器的<em>Y0</em>输出时选择第一片，<em>Y1</em>输出时选择第二片；</p>
+<p>也就是说当P2.7-P2.5 &#x3D; 000时，<em>Y0</em>输出，选择第一片；当P2.7-P2.5 &#x3D; 001时，<em>Y1</em>输出，选择第二片。</p>
+<p>地址线方面，每片的地址都是从0…0B到1…1B。</p>
+<p>则每一片的地址范围如下：</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">P2.7 P2.6 P2.5</th>
+<th align="center">地址线</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">第一片</td>
+<td align="center">0 0 0</td>
+<td align="center">0…0</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">0 0 0</td>
+<td align="center">1…1</td>
+</tr>
+<tr>
+<td align="center">第二片</td>
+<td align="center">0 0 1</td>
+<td align="center">0…0</td>
+</tr>
+<tr>
+<td align="center"></td>
+<td align="center">0 0 1</td>
+<td align="center">1…1</td>
+</tr>
+</tbody></table>
+<p>即:</p>
+<p>第一片为 <code>0000 0000 0000 0000B~0001 1111 1111 1111B</code></p>
+<p>第二片为 <code>0010 0000 0000 0000B~0011 1111 1111 1111B</code></p>
+<p>换算成16进制即为</p>
+<table>
+<thead>
+<tr>
+<th align="center">第一片</th>
+<th align="center">第二片</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">0000H ~ 1FFFH</td>
+<td align="center">2000H ~ 3FFFH</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>这里需要注意的是，只有高三位是片选信号，第四位开始就为地址信号了，因此每一片的地址范围高三位是不变的，变的只有后面的地址位。（即从全0到全1）</p>
+</blockquote>
+<blockquote>
+<p>思考：采用2764 (8K*8)芯片扩展程序存储器，分配地址范围4000H~7FFFH;采用完全译码方式该如何设计呢? （答案见PPT 第20页）</p>
+</blockquote>
+<h3 id="如何识别扩展的存储器的大小"><a href="#如何识别扩展的存储器的大小" class="headerlink" title="如何识别扩展的存储器的大小"></a>如何识别扩展的存储器的大小</h3><p>如上例所示，该存储器共有13根地址线（A0-A12），即为2^13&#x3D;8KB，同时有D0-D7共8根数据线，因此一片的总容量为8*8&#x3D;64KB</p>
+<blockquote>
+<p>Byte与KB、MB等的换算：</p>
+<p>设有2^nByte，每当n增长10，单位就增长一位，如n&#x3D;10即为KB，n&#x3D;20即为MB；在此基础上，2的n的个位次方（2^(n%10)）就是换算后的数据</p>
+<p>例如2^13B可看作2^(10+3)B -&gt; 2^10B * 2^3 -&gt; 1KB * 2^3 -&gt; 8KB</p>
+</blockquote>
+<h3 id="扩展时三总线如何接"><a href="#扩展时三总线如何接" class="headerlink" title="扩展时三总线如何接"></a>扩展时三总线如何接</h3><p><strong>地址总线</strong>:低8位地址通过373锁存后接片外ROM低8位地址，剩余地址依次顺接P2口;P2口剩余高位地址译码后接片选端CE</p>
+<p><strong>控制总线</strong>:PSEN接OE端</p>
+<p><strong>数据总线</strong>:数据线接P0口</p>
+<h2 id="数据存储器扩展"><a href="#数据存储器扩展" class="headerlink" title="数据存储器扩展"></a>数据存储器扩展</h2><p>RAM扩展地址范围计算方法与接法与ROM类似，只有控制总线变为<strong>OE端接单片机RD端</strong>，<strong>WE端接单片机WR端</strong>，在此不再过多赘述</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>存储器/Memorey</p><p><a href="http://merept.github.io/dpj-mem/">http://merept.github.io/dpj-mem/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>Peter.M.Jing</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2022-05-17</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2022-05-20</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/">单片机</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="https://pic.imgdb.cn/item/62839a0509475431299aadc4.jpg" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="https://pic.imgdb.cn/item/62839a3709475431299b9885.jpg" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/dpj-int/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">中断/Interrupt</span></a></div><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/dpj-io/"><span class="level-item">输入输出口/IO</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="disqus_thread"><noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript></div><script>var disqus_config = function () {
+            this.page.url = 'http://merept.github.io/dpj-mem/';
+            this.page.identifier = 'dpj-mem/';
+        };
+        (function() {
+            var d = document, s = d.createElement('script');  
+            s.src = '//' + 'merept' + '.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-3-widescreen  order-1"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar" src="https://pic.imgdb.cn/item/6283a8250947543129e95a5e.png" alt="MerePT"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">MerePT</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>日本 我孙子市</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">7</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">1</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">2</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/merept" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/merept"><i class="fab fa-github"></i></a></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-05-28T05:50:22.000Z">2022-05-28</time></p><p class="title"><a href="/gpac/">SWPU学分绩点计算器</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-05-28T05:50:12.000Z">2022-05-28</time></p><p class="title"><a href="/gpac-how-to-bakcup/">关于如何备份历史记录</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-05-21T12:29:08.000Z">2022-05-21</time></p><p class="title"><a href="/dpj-timer/">定时器与计数器/Timer And Counter</a></p><p class="categories"><a href="/categories/%E5%8D%95%E7%89%87%E6%9C%BA/">单片机</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-05-17T15:38:22.000Z">2022-05-17</time></p><p class="title"><a href="/dpj-assembler/">汇编/Assembler</a></p><p class="categories"><a href="/categories/%E5%8D%95%E7%89%87%E6%9C%BA/">单片机</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2022-05-17T15:33:52.000Z">2022-05-17</time></p><p class="title"><a href="/dpj-int/">中断/Interrupt</a></p><p class="categories"><a href="/categories/%E5%8D%95%E7%89%87%E6%9C%BA/">单片机</a></p></div></article></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/%E5%8D%95%E7%89%87%E6%9C%BA/"><span class="tag">单片机</span><span class="tag">5</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%BD%AF%E4%BB%B6/"><span class="tag">软件</span><span class="tag">2</span></a></div></div></div></div></div><div class="column-right-shadow is-hidden-widescreen"></div></div><div class="column column-right is-4-tablet is-4-desktop is-3-widescreen is-hidden-touch is-hidden-desktop-only order-3"><div class="card widget is-sticky" id="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="is-flex" href="#总线-x2F-Bus"><span class="mr-2">1</span><span>总线/Bus</span></a></li><li><a class="is-flex" href="#ROM结构"><span class="mr-2">2</span><span>ROM结构</span></a><ul class="menu-list"><li><a class="is-flex" href="#各操作的入口地址"><span class="mr-2">2.1</span><span>各操作的入口地址</span></a></li></ul></li><li><a class="is-flex" href="#RAM结构"><span class="mr-2">3</span><span>RAM结构</span></a><ul class="menu-list"><li><a class="is-flex" href="#工作寄存器组"><span class="mr-2">3.1</span><span>工作寄存器组</span></a></li><li><a class="is-flex" href="#位寻址区"><span class="mr-2">3.2</span><span>位寻址区</span></a></li><li><a class="is-flex" href="#普通RAM区"><span class="mr-2">3.3</span><span>普通RAM区</span></a></li><li><a class="is-flex" href="#特殊功能寄存区"><span class="mr-2">3.4</span><span>特殊功能寄存区</span></a><ul class="menu-list"><li><a class="is-flex" href="#PSW"><span class="mr-2">3.4.1</span><span>PSW</span></a></li><li><a class="is-flex" href="#A、B"><span class="mr-2">3.4.2</span><span>A、B</span></a></li><li><a class="is-flex" href="#DPTR"><span class="mr-2">3.4.3</span><span>DPTR</span></a></li></ul></li></ul></li><li><a class="is-flex" href="#程序存储器扩展"><span class="mr-2">4</span><span>程序存储器扩展</span></a><ul class="menu-list"><li><a class="is-flex" href="#程序存储器扩展地址范围计算"><span class="mr-2">4.1</span><span>程序存储器扩展地址范围计算</span></a></li><li><a class="is-flex" href="#如何识别扩展的存储器的大小"><span class="mr-2">4.2</span><span>如何识别扩展的存储器的大小</span></a></li><li><a class="is-flex" href="#扩展时三总线如何接"><span class="mr-2">4.3</span><span>扩展时三总线如何接</span></a></li></ul></li><li><a class="is-flex" href="#数据存储器扩展"><span class="mr-2">5</span><span>数据存储器扩展</span></a></li></ul></div></div><style>.menu-list > li > a.is-active + .menu-list { display: block; }.menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/logo.svg" alt="实习生干饭基地" height="28"></a><p class="is-size-7"><span>&copy; 2022 Peter.M.Jing</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/merept/merept.github.io"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdnjs.loli.net/ajax/libs/jquery/3.3.1/jquery.min.js"></script><script src="https://cdnjs.loli.net/ajax/libs/moment.js/2.22.2/moment-with-locales.min.js"></script><script src="https://cdnjs.loli.net/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdnjs.loli.net/ajax/libs/cookieconsent/3.1.1/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdnjs.loli.net/ajax/libs/lightgallery/1.10.0/js/lightgallery.min.js" defer></script><script src="https://cdnjs.loli.net/ajax/libs/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><script type="text/x-mathjax-config">MathJax.Hub.Config({
+            'HTML-CSS': {
+                matchFontHeight: false
+            },
+            SVG: {
+                matchFontHeight: false
+            },
+            CommonHTML: {
+                matchFontHeight: false
+            },
+            tex2jax: {
+                inlineMath: [
+                    ['$','$'],
+                    ['\\(','\\)']
+                ]
+            }
+        });</script><script src="https://cdnjs.loli.net/ajax/libs/mathjax/2.7.9/MathJax.js?config=TeX-MML-AM_CHTML" defer></script><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
